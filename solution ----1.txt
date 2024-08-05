@@ -1,0 +1,101 @@
+Step 1: Set Up Local Kubernetes Cluster
+Follow the same instructions for setting up Minikube or Kind as previously mentioned.
+
+Step 2: Deploy the Services
+Follow the same deployment steps provided earlier. Ensure you have your Kubernetes YAML files ready to deploy both the frontend and backend services.
+
+Step 3: Automated Testing
+Create a Python Test Script:
+You can use the requests library to check the integration between the frontend and backend services.
+import requests
+
+def test_frontend_integration():
+    frontend_url = 'http://<frontend-service-url>'
+    
+    try:
+        response = requests.get(frontend_url)
+        response.raise_for_status()
+        
+        if 'Greeting from backend' in response.text:
+            print('Test passed: Frontend correctly displays the backend message.')
+        else:
+            print('Test failed: Message does not match.')
+
+    except requests.exceptions.RequestException as e:
+        print(f'Error connecting to frontend: {e}')
+
+if __name__ == '__main__':
+    test_frontend_integration()
+Install Required Dependencies:
+If you haven't done so, install the requests library. You can do this using pip.
+pip install requests
+Step 4: Documentation
+Create a README.md File:
+# QA Test Project
+
+## Setup Instructions
+
+This project demonstrates deploying a frontend and backend service to a local Kubernetes cluster and testing their integration using Python.
+
+### Prerequisites
+- Minikube or Kind installed
+- kubectl installed
+- Python 3.x installed
+- pip installed
+
+### Deployment
+
+1. Start your local Kubernetes cluster:
+   ```bash
+   minikube start
+
+2.Clone the repository:
+git clone https://github.com/Vengatesh-m/qa-test.git
+cd qa-test
+3.Deploy the services:
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f backend-deployment.yaml
+4.Access the frontend service:
+minikube service frontend --url
+
+Running Automated Tests
+Install dependencies:
+pip install requests
+Run the test script:
+python test.py
+Step 5: Publish to GitHub
+Create a new GitHub repository ( it's public).
+Push your code:
+bash
+
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin <your-repo-url>
+git push -u origin main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

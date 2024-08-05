@@ -1,0 +1,91 @@
+1. System Health Monitoring Script
+This script will monitor CPU usage, memory usage, disk space, and running processes. If any of these metrics exceed predefined thresholds,
+ it will log the information to the console.
+
+system_health_monitor.py
+import psutil
+import logging
+from datetime import datetime
+
+# Set up logging
+logging.basicConfig(filename='system_health.log', level=logging.INFO)
+
+# Define thresholds
+CPU_THRESHOLD = 80  # percentage
+MEMORY_THRESHOLD = 80  # percentage
+DISK_THRESHOLD = 90  # percentage
+
+def log_health_metrics():
+    # Get CPU usage
+    cpu_usage = psutil.cpu_percent(interval=1)
+    if cpu_usage > CPU_THRESHOLD:
+        logging.warning(f"{datetime.now()}: CPU usage is above threshold: {cpu_usage}%")
+
+    # Get memory usage
+    memory_info = psutil.virtual_memory()
+    memory_usage = memory_info.percent
+    if memory_usage > MEMORY_THRESHOLD:
+        logging.warning(f"{datetime.now()}: Memory usage is above threshold: {memory_usage}%")
+
+    # Get disk usage
+    disk_info = psutil.disk_usage('/')
+    disk_usage = disk_info.percent
+    if disk_usage > DISK_THRESHOLD:
+        logging.warning(f"{datetime.now()}: Disk usage is above threshold: {disk_usage}%")
+
+    # Log running processes
+    running_processes = len(psutil.pids())
+    logging.info(f"{datetime.now()}: Running processes: {running_processes}")
+
+if __name__ == '__main__':
+    log_health_metrics()
+    print("System health metrics logged.")
+
+Install the Required Library:
+pip install psutil
+python system_health_monitor.py
+The logs will be saved in system_health.log in the same directory as the script.
+Application Health Checker
+This script checks the uptime of a web application by sending an HTTP request and checking the status code.
+
+app_health_checker.py
+
+import requests
+
+# Define the application URL
+APP_URL = 'http://example.com'  # Change this to your application URL
+
+def check_application_health():
+    try:
+        response = requests.get(APP_URL)
+        if response.status_code == 200:
+            print(f"The application is UP. Status Code: {response.status_code}")
+        else:
+            print(f"The application is DOWN. Status Code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"The application is DOWN. Error: {e}")
+
+if __name__ == '__main__':
+    check_application_health()
+
+The System Health Monitoring Script checks the CPU, memory, and disk usage and logs any issues to a file. It also counts the number of running processes.
+The Application Health Checker checks if a web application is up by sending a request and checking the response status code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
